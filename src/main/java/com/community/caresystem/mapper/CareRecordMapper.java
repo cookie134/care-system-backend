@@ -1,7 +1,7 @@
 package com.community.caresystem.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.community.care_system.entity.CareRecord;
+import com.community.caresystem.entity.CareRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
