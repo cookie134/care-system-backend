@@ -11,21 +11,16 @@ import java.util.Date;
 public class CareRecord {
     @TableId(type = IdType.AUTO)
     private Long id;
-
     private Long elderId;
     private String elderName;
-
-    private String reporterName; // 上报人（家属）
-    private String staffName;    // 承办人（员工）
-
+    private String reporterName; // 对应 reporter_name
+    private String staffName;    // 对应 staff_name
     private String serviceType;
     private String serviceContent;
-    private String photos;       // 存储 JSON 字符串
+    private String photos;
     private String location;
-
-    private String status;       // 状态：待接单/已接单/服务中/已完成
-
-    private Date createTime;     // 上报时间
-    private Date acceptTime;     // 接单时间
-    private Date finishTime;     // 完成时间
+    private String status;
+    private Date createTime;     // 对应 create_time
+    private Date acceptTime;     // 对应 accept_time
+    private Date finishTime;     // 对应 finish_time
 }
