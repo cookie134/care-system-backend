@@ -66,6 +66,46 @@ public class CareRecordController {
             return error;
         }
     }
+    /**
+     * 3. 员工接单接口 (POST)
+     * 接收参数: { "id": 1, "staffName": "张三" }
+     */
+    @PostMapping("/accept")
+    public Map<String, Object> acceptRecord(@RequestBody Map<String, Object> params) {
+        try {
+            // 获取前端传来的 ID
+            Long id = Long.valueOf(params.get("id").toString());
+            String staffName = (String) params.get("staffName");
+
+            // 1. 查询该条记录
+            CareRecord record = careRecordMapper.selectById(id);
+            if (record == null) {
+                throw new RuntimeException("该记录不存在");
+            }
+
+            // 2. 检查状态（防止被别人抢先接单）
+            if (!"待接单".equals(record.getStatus())) {
+                throw new RuntimeException("该任务已被接单或已完成");
+            }
+
+            // 3. 修改状态并保存
+            record.setStatus("已接单");
+            record.setStaffName(staffName);
+            record.setAcceptTime(new Date()); // 记录接单时间
+
+            careRecordMapper.updateById(record);
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("code", 0);
+            result.put("message", "接单成功");
+            return result;
+        } catch (Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", -1);
+            error.put("message", e.getMessage());
+            return error;
+        }
+    }
 
 
 }
