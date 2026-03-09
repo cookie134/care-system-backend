@@ -1,23 +1,14 @@
 package com.community.caresystem.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.community.caresystem.entity.Elder;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
-import java.util.List;
 
+/**
+ * 继承 BaseMapper 后，MyBatis-Plus 会自动实现 insert, selectList, selectById 等方法。
+ * 之前的 @Insert 和 @Select 都可以删掉了。
+ */
 @Mapper
-public interface ElderMapper {
-    // 插入老人信息
-    @Insert("INSERT INTO elders(name, gender, age, id_card, phone, address, care_level, emergency_contact, emergency_phone, health_notes) " +
-            "VALUES(#{name}, #{gender}, #{age}, #{idCard}, #{phone}, #{address}, #{careLevel}, #{emergencyContact}, #{emergencyPhone}, #{healthNotes})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(Elder elder);
-
-    // 查询所有老人
-    @Select("SELECT * FROM elders ORDER BY create_time DESC")
-    List<Elder> selectAll();
-
-    Object selectList(Object o);
+public interface ElderMapper extends BaseMapper<Elder> {
+    // 这里不需要写任何代码
 }
