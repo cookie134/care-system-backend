@@ -18,4 +18,6 @@ public interface ElderMapper {
     // 查询所有老人
     @Select("SELECT * FROM elders ORDER BY create_time DESC")
     List<Elder> selectAll();
+
+    Object selectList(Object o);
 }
