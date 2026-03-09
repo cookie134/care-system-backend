@@ -1,22 +1,31 @@
-package com.community.care_system.entity;
+package com.community.caresystem.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import java.util.Date;
 
-/**
- * 服务记录实体类
- */
 @Data
+@TableName("service_records")
 public class CareRecord {
+    @TableId(type = IdType.AUTO)
     private Long id;
-    private Long elderId;           // 关联的老人ID
-    private String elderName;       // 老人姓名
-    private String serviceType;     // 服务类型
-    private String staffName;       // 服务人员
-    private String serviceContent;  // 服务内容
-    private String photos;          // 照片 (JSON字符串)
-    private String location;        // 位置
-    private Date serviceTime;       // 服务发生时间
-    private String status;          // 状态
-    private Date createTime;        // 提交时间
+
+    private Long elderId;
+    private String elderName;
+
+    private String reporterName; // 上报人（家属）
+    private String staffName;    // 承办人（员工）
+
+    private String serviceType;
+    private String serviceContent;
+    private String photos;       // 存储 JSON 字符串
+    private String location;
+
+    private String status;       // 状态：待接单/已接单/服务中/已完成
+
+    private Date createTime;     // 上报时间
+    private Date acceptTime;     // 接单时间
+    private Date finishTime;     // 完成时间
 }

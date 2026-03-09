@@ -1,21 +1,14 @@
-package com.community.caresystem.mapper;
+package com.community.caresystem.mapper; // 确保包名与你实际路径一致
 
-import com.community.care_system.entity.CareRecord;
-import org.apache.ibatis.annotations.Insert;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.community.caresystem.entity.CareRecord;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
-import java.util.List;
 
+/**
+ * 继承 BaseMapper 后，MyBatis-Plus 会自动为你生成
+ * insert, delete, update, selectList 等所有常用的 CRUD 方法。
+ */
 @Mapper
-public interface CareRecordMapper {
-    // 插入服务记录
-    @Insert("INSERT INTO service_records(elder_id, elder_name, service_type, staff_name, service_content, photos, location, service_time, status) " +
-            "VALUES(#{elderId}, #{elderName}, #{serviceType}, #{staffName}, #{serviceContent}, #{photos}, #{location}, #{serviceTime}, #{status})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(CareRecord record);
-
-    // 查询所有记录
-    @Select("SELECT * FROM service_records ORDER BY service_time DESC")
-    List<CareRecord> selectAll();
+public interface CareRecordMapper extends BaseMapper<CareRecord> {
+    // 这里不需要写任何代码，selectList 等方法已经自动继承过来了
 }

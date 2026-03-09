@@ -1,4 +1,4 @@
-package com.community.care_system.entity;
+package com.community.caresystem.entity;
 
 import lombok.Data;
 import java.util.Date;

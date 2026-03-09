@@ -1,6 +1,6 @@
 package com.community.caresystem.mapper;
 
-import com.community.care_system.entity.Elder;
+import com.community.caresystem.entity.Elder;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;

@@ -1,6 +1,6 @@
 package com.community.caresystem.controller;
 
-import com.community.care_system.entity.Elder;
+import com.community.caresystem.entity.Elder;
 import com.community.caresystem.mapper.ElderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
