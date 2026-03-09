@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api/care_records")
 public class CareRecordController {
@@ -20,17 +19,26 @@ public class CareRecordController {
 
     /**
      * 1. 获取所有服务记录 (GET)
-     * 用于家属查看进度或员工查看任务池
+     * 增加了详细的报错捕获，用于排查 500 错误
      */
     @GetMapping
     public Map<String, Object> getRecords() {
-        // 查询所有记录，按创建时间倒序排列
-        List<CareRecord> list = careRecordMapper.selectList(null);
+        try {
+            // 查询所有记录
+            List<CareRecord> list = careRecordMapper.selectList(null);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", 0);
-        result.put("data", list);
-        return result;
+            Map<String, Object> result = new HashMap<>();
+            result.put("code", 0);
+            result.put("data", list);
+            return result;
+        } catch (Exception e) {
+            // 如果报错了，会在控制台打印具体原因，并返回给小程序
+            e.printStackTrace();
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", -1);
+            error.put("message", "后端报错详情: " + e.toString());
+            return error;
+        }
     }
 
     /**
@@ -39,7 +47,7 @@ public class CareRecordController {
     @PostMapping
     public Map<String, Object> addRecord(@RequestBody CareRecord record) {
         try {
-            // 后端强制初始化状态和时间，确保安全
+            // 设置初始状态和创建时间
             record.setStatus("待接单");
             record.setCreateTime(new Date());
 
@@ -54,7 +62,7 @@ public class CareRecordController {
             e.printStackTrace();
             Map<String, Object> error = new HashMap<>();
             error.put("code", -1);
-            error.put("message", "服务器错误: " + e.getMessage());
+            error.put("message", "提交失败: " + e.getMessage());
             return error;
         }
     }
