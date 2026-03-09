@@ -1,4 +1,4 @@
-package com.community.caresystem.entity;
+package com.community.care_system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -8,23 +8,30 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("service_records")
+@TableName("service_records") // 对应数据库表名
 public class CareRecord {
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    @TableField("elder_id")
     private Long elderId;
+
+    @TableField("elder_name")
     private String elderName;
 
-    @TableField("reporter_name") // 手动指定数据库列名
+    @TableField("reporter_name")
     private String reporterName;
 
     @TableField("staff_name")
     private String staffName;
 
+    @TableField("service_type")
     private String serviceType;
+
+    @TableField("service_content")
     private String serviceContent;
-    private String photos;
+
+    private String photos; // 数据库已改为 TEXT 类型
     private String location;
     private String status;
 
