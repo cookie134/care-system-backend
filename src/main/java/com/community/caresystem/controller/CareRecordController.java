@@ -106,6 +106,39 @@ public class CareRecordController {
             return error;
         }
     }
+    /**
+     * 4. 员工完成服务接口 (POST)
+     * 接收参数: { "id": 1, "serviceContent": "老人已吃完，状态良好", "photos": "['cloud://...']" }
+     */
+    @PostMapping("/finish")
+    public Map<String, Object> finishRecord(@RequestBody Map<String, Object> params) {
+        try {
+            Long id = Long.valueOf(params.get("id").toString());
+            String serviceContent = (String) params.get("serviceContent");
+            String photos = (String) params.get("photos"); // 接收前端传来的 JSON 字符串
+
+            CareRecord record = careRecordMapper.selectById(id);
+            if (record == null) throw new RuntimeException("记录不存在");
+
+            // 更新内容
+            record.setStatus("已完成");
+            record.setServiceContent(serviceContent); // 覆盖家属初次填写的需求，改为服务总结
+            record.setPhotos(photos);                 // 存入现场照片
+            record.setFinishTime(new Date());         // 记录完成时间
+
+            careRecordMapper.updateById(record);
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("code", 0);
+            result.put("message", "归档成功");
+            return result;
+        } catch (Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("code", -1);
+            error.put("message", e.getMessage());
+            return error;
+        }
+    }
 
 
 }
